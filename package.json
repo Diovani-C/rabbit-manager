@@ -1,0 +1,7 @@
+{
+  "name": "rabbit-manager",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ]
+}

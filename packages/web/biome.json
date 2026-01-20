@@ -1,0 +1,13 @@
+{
+  "root": false,
+	"$schema": "../../biome.json",
+  "files": {
+    "includes": [
+      "src/*",
+      ".vscode/*",
+      "index.html",
+      "vite.config.js",
+      "!!src/routeTree.gen.ts"
+    ]
+  }
+}
