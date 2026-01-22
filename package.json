@@ -1,10 +1,12 @@
 {
   "name": "rabbit-manager",
   "private": true,
-  "workspaces": [
-    "packages/*"
-  ],
-  "devDependencies": {
-    "@faker-js/faker": "^10.2.0"
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ],
+    "catalog": {
+      "@biomejs/biome": "2.3.11"
+    }
   }
 }
