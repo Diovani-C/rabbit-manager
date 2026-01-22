@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { DrizzleQueryError, eq } from "drizzle-orm";
 import type { Database } from "@/types";
 import {
 	type EmailExists,
@@ -6,6 +6,7 @@ import {
 	type UserUpdateSchema,
 	usersTable,
 } from "./user.dto";
+import { SQL } from "bun";
 
 // This ensures we NEVER accidentally return the password hash.
 const safeColumns = {
@@ -31,11 +32,11 @@ export async function createUser(db: Database, newUser: UserInsertSchema) {
 			.returning(safeColumns);
 
 		return createdUser;
-	} catch (error: any) {
-		if (error?.code === "23505") {
+	} catch (error) {
+		if (error instanceof DrizzleQueryError) {
 			if (
-				error.constraint_name?.includes("email") ||
-				error.detail?.includes("email")
+				error.cause instanceof SQL.PostgresError &&
+				error.cause.constraint === "users_email_unique"
 			) {
 				return "EMAIL_EXISTS" satisfies EmailExists;
 			}
